@@ -54,11 +54,18 @@ def main():
                         default='docker',
                         help='Specify container type', 
                         choices=['docker', 'podman'])
+    parser.add_argument('--base-image',
+                        dest='base_image',
+                        default=None,
+                        help='Custom base image instead of redroid/redroid:<android>-latest')
+    parser.add_argument('--output-image',
+                        dest='output_image',
+                        default=None,
+                        help='Custom output image name:tag')
 
     args = parser.parse_args()
-    dockerfile = dockerfile + \
-        "FROM redroid/redroid:{}-latest\n".format(
-            args.android)
+    base_image = args.base_image if args.base_image else "redroid/redroid:{}-latest".format(args.android)
+    dockerfile = dockerfile + "FROM {}\n".format(base_image)
     tags.append(args.android)
     if args.gapps:
         if args.android in ["11.0.0"]:
@@ -108,7 +115,16 @@ def main():
     print("\nDockerfile\n"+dockerfile)
     with open("./Dockerfile", "w") as f:
         f.write(dockerfile)
-    new_image_name = "redroid/redroid:"+"_".join(tags)
+    if args.output_image:
+        new_image_name = args.output_image
+    elif args.base_image:
+        if ":" in args.base_image:
+            repo, base_tag = args.base_image.rsplit(":", 1)
+            new_image_name = "{}:{}_{}".format(repo, base_tag, "_".join(tags[1:])) if len(tags) > 1 else args.base_image
+        else:
+            new_image_name = "{}:{}".format(args.base_image, "_".join(tags))
+    else:
+        new_image_name = "redroid/redroid:"+"_".join(tags)
     subprocess.run([args.container, "build", "-t", new_image_name, "."])
     helper.print_color("Successfully built {}".format(
         new_image_name), helper.bcolors.GREEN)

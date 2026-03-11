@@ -1,5 +1,26 @@
 # Remote-Android Script
 
+```
+sudo /home/zch/Documents/AgentEnv/agent_venv/bin/python /home/zch/Documents/AgentEnv/redroid_keeper/keeper.py create --id 3
+此脚本使用的magisk:
+https://github.com/ayasa520/Magisk/releases/download/v30.6/app-debug.apk
+sudo docker restart redroid_3
+
+proxy && url='https://github.com/LSPosed/LSPosed.github.io/releases/download/shamiko-126/Shamiko-v0.6-126-release.zip' && file='/tmp/Shamiko-v0.6-126-release.zip' && curl -L "$url" -o "$file" && adb connect 127.0.0.1:5558 >/dev/null && adb -s 127.0.0.1:5558 shell 'mkdir -p /sdcard/Download' && adb -s 127.0.0.1:5558 push "$file" /sdcard/Download/ && adb -s 127.0.0.1:5558 shell 'ls -l /sdcard/Download/Shamiko-v0.6-126-release.zip'
+
+proxy && url='https://github.com/LSPosed/LSPosed.github.io/releases/download/shamiko-414/Shamiko-v1.2.5-414-release.zip' && file='/tmp/Shamiko-v1.2.5-414-release.zip' && curl -L "$url" -o "$file" && adb connect 127.0.0.1:5558 >/dev/null && adb -s 127.0.0.1:5558 shell 'mkdir -p /sdcard/Download' && adb -s 127.0.0.1:5558 push "$file" /sdcard/Download/ && adb -s 127.0.0.1:5558 shell 'ls -l /sdcard/Download/Shamiko-v1.2.5-414-release.zip'
+
+proxy && url='https://github.com/Dr-TSNG/ZygiskNext/releases/download/v1.3.2/Zygisk-Next-1.3.2-688-2c60cdd-release.zip' && file='/tmp/Zygisk-Next-1.3.2-688-2c60cdd-release.zip' && curl -L "$url" -o "$file" && adb connect 127.0.0.1:5558 >/dev/null && adb -s 127.0.0.1:5558 shell 'mkdir -p /sdcard/Download' && adb -s 127.0.0.1:5558 push "$file" /sdcard/Download/ && adb -s 127.0.0.1:5558 shell 'ls -l /sdcard/Download/Zygisk-Next-1.3.2-688-2c60cdd-release.zip'
+
+adb -s 127.0.0.1:5558 shell 
+su
+/data/adb/modules/zygisksu/bin/zygiskd enforce-denylist disabled
+
+proxy && url='https://pan.mt2.cn/apk/26020493' && file='/tmp/MT2.26.2.apk' && curl -L "$url" -o "$file" && adb connect 127.0.0.1:5558 >/dev/null && adb  -s 127.0.0.1:5558 install "$file"
+
+启动白名单：https://magiskcn.com/shamiko-whitelist.html（创建/data/adb/shamiko/whitelist
+```
+
 This script adds Gapps, Magisk and libndk to redroid **without recompiling the entire image**
 If redroid-script doesn't work, please create an issue
 
